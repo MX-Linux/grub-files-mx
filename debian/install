@@ -1,0 +1,10 @@
+grub.d/00_header etc/grub.d
+grub.d/05_debian_theme etc/grub.d
+grub.d/10_linux etc/grub.d
+grub.d/20_linux_xen etc/grub.d
+grub.d/20_memtest86+ etc/grub.d
+grub.d/30_os-prober etc/grub.d
+grub.d/30_uefi-firmware etc/grub.d
+grub.d/40_custom etc/grub.d
+grub.d/41_custom etc/grub.d
+grub.d/README etc/grub.d

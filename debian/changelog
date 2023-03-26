@@ -1,0 +1,17 @@
+grub-files-mx (23.03.03) mx; urgency=medium
+
+  * adjust removal script
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sat, 25 Mar 2023 22:41:22 -0400
+
+grub-files-mx (23.03.02) mx; urgency=medium
+
+  * modify build of package 
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sat, 25 Mar 2023 22:40:07 -0400
+
+grub-files-mx (23.03.01) mx; urgency=medium
+
+  * inital build
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sat, 25 Mar 2023 20:52:08 -0400

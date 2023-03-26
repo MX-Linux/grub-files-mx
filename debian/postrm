@@ -1,0 +1,33 @@
+#!/bin/bash
+
+#DEBHELPER#
+
+# postrm script for grub-files-mx
+
+#set -e
+
+case "$1" in
+  purge|remove)
+    for F in \
+        /etc/grub.d/00_header    \
+        /etc/grub.d/05_debian_theme    \
+        /etc/grub.d/10_linux    \
+        /etc/grub.d/20_linux_xen    \
+        /etc/grub.d/20_memtest86+   \
+        /etc/grub.d/30_os-prober    \
+        /etc/grub.d/30_uefi-firmware    \
+        /etc/grub.d/40_custom    \
+        /etc/grub.d/41_custom    \
+        /etc/grub.d/README
+    do
+    	[[ -e $F.distrib ]] && rm $F
+        dpkg-divert --quiet --package grub-files-mx --rename \
+                    --divert $F.distrib --remove $F || :
+    done
+  ;;
+  *) :
+  ;;
+
+esac
+
+exit 0

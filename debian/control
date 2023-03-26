@@ -1,0 +1,11 @@
+Source: grub-files-mx
+Section: system
+Priority: optional
+Maintainer: Dolphin Oracle <dolphinoracle@gmail.com>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.8
+
+Package: grub-files-mx
+Architecture: all
+Depends:
+Description: modified grub files for mx and antiX linux
