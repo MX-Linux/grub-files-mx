@@ -1,3 +1,9 @@
+grub-files-mx (23.03.04) mx; urgency=medium
+
+  * change divert naming scheme
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sun, 26 Mar 2023 17:52:09 -0400
+
 grub-files-mx (23.03.03) mx; urgency=medium
 
   * adjust removal script

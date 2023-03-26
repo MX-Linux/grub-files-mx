@@ -21,7 +21,7 @@ case "$1" in
         /etc/grub.d/README
     do
         dpkg-divert --quiet --package grub-files-mx --rename \
-                    --divert $F.distrib --add $F || :
+                    --divert $F.dpkg-dist --add $F || :
     done
   ;;
   *) :
