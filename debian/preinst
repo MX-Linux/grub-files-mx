@@ -18,6 +18,7 @@ case "$1" in
         /etc/grub.d/30_uefi-firmware    \
         /etc/grub.d/40_custom    \
         /etc/grub.d/41_custom    \
+        /usr/share/grub/default/grub \
         /etc/grub.d/README
     do
         dpkg-divert --quiet --package grub-files-mx --rename \

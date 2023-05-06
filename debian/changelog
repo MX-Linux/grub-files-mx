@@ -1,3 +1,9 @@
+grub-files-mx (23.05.01) mx; urgency=medium
+
+  * divert default grub config 
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sat, 06 May 2023 18:35:57 -0400
+
 grub-files-mx (23.03.04) mx; urgency=medium
 
   * change divert naming scheme
