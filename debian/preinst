@@ -9,7 +9,10 @@
 case "$1" in
   install|upgrade) \
     ##preseed debconf to enable os-prober
-    echo "grub-pc grub2/enable_os_prober boolean true" | debconf-set-selections
+    if [ -z "$(debconf-get-selections |grep enable_os_prober)" ]; then
+        echo "set up os-prober"
+        echo "grub-pc grub2/enable_os_prober boolean true" | debconf-set-selections
+    fi
     for F in \
         /etc/grub.d/00_header    \
         /etc/grub.d/05_debian_theme    \
