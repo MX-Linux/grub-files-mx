@@ -1,3 +1,10 @@
+grub-files-mx (23.05.04) mx; urgency=medium
+
+  * use boolean key to tell when to enable os-prober or not.
+  * by default, true
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Tue, 09 May 2023 00:06:01 -0400
+
 grub-files-mx (23.05.03) mx; urgency=medium
 
   * set a debconf key to check, otherwise setup os-prober
