@@ -8,6 +8,8 @@
 
 case "$1" in
   install|upgrade) \
+    ##preseed debconf to enable os-prober
+    echo "grub-pc grub2/enable_os_prober boolean true" | debconf-set-selections
     for F in \
         /etc/grub.d/00_header    \
         /etc/grub.d/05_debian_theme    \
