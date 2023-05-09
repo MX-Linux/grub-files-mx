@@ -9,9 +9,11 @@
 case "$1" in
   install|upgrade) \
     ##preseed debconf to enable os-prober
-    if [ -z "$(debconf-get-selections |grep grub_files_mx_enable_os_prober)" ]; then
-        echo "set up os-prober"
+    if [ -z "$(debconf-get-selections |grep grub-files-mx)" ]; then
         echo "grub-files-mx grub2/grub_files_mx_enable_os_prober boolean true" | debconf-set-selections
+    fi
+    if [ "$(debconf-get-selections |grep grub-files-mx |awk '{print $4}')" = "true" ]
+        echo "set up os-prober"
         echo "grub-pc grub2/enable_os_prober boolean true" | debconf-set-selections
     fi
     for F in \
