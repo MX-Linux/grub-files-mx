@@ -7,5 +7,5 @@ Standards-Version: 3.9.8
 
 Package: grub-files-mx
 Architecture: all
-Depends:
+Depends: debconf
 Description: modified grub files for mx and antiX linux
