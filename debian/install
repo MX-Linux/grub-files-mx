@@ -9,3 +9,4 @@ grub.d/40_custom etc/grub.d
 grub.d/41_custom etc/grub.d
 grub.d/README etc/grub.d
 default/* /usr/share/grub/default
+etc/* etc
