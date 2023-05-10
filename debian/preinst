@@ -11,8 +11,6 @@ case "$1" in
     ##preseed debconf to enable os-prober
     if [ -z "$(debconf-get-selections |grep grub-files-mx)" ]; then
         echo "grub-files-mx grub2/grub_files_mx_enable_os_prober boolean true" | debconf-set-selections
-    fi
-    if [ "$(debconf-get-selections |grep grub-files-mx |awk '{print $4}')" = "true" ]; then
         echo "set up os-prober"
         echo "grub-pc grub2/enable_os_prober boolean true" | debconf-set-selections
     fi
