@@ -1,0 +1,2 @@
+# keep this unset GRUB_DISABLE_OS_PROBER
+unset GRUB_DISABLE_OS_PROBER

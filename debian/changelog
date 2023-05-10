@@ -1,3 +1,9 @@
+grub-files-mx (23.05.05) mx; urgency=medium
+
+  * add extra defaults
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Tue, 09 May 2023 23:52:37 -0400
+
 grub-files-mx (23.05.04) mx; urgency=medium
 
   * use boolean key to tell when to enable os-prober or not.
