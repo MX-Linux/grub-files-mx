@@ -37,6 +37,3 @@ GRUB_DISABLE_RECOVERY="true"
 
 GRUB_THEME="/boot/grub/themes/mx_linux/theme.txt"
 
-if [ -e /etc/default/grub.mx-defaults ]; then
-     .  /etc/default/grub.mx-defaults
-fi

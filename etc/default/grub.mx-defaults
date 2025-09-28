@@ -1,2 +1,2 @@
-# keep this unset GRUB_DISABLE_OS_PROBER
-unset GRUB_DISABLE_OS_PROBER
+# kept for compatibilty for upgraders
+#all default settings are in /etc/default/grub

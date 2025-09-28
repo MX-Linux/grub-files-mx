@@ -1,3 +1,17 @@
+grub-files-mx (25.09.01mx25) mx; urgency=medium
+
+  * add an echo space to grub.cfg to allow some older machines to see menu
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Sun, 28 Sep 2025 09:55:09 -0400
+
+grub-files-mx (25.06.01mx25) mx; urgency=medium
+
+  * update grub.d files
+  * remove extra defaults
+  * keep file for backward compatibility for updaters 
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Wed, 18 Jun 2025 20:13:35 -0400
+
 grub-files-mx (23.05.05) mx; urgency=medium
 
   * add extra defaults
