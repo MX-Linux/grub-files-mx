@@ -20,10 +20,8 @@ case "$1" in
         /etc/grub.d/41_custom    \
         /usr/share/grub/default/grub \
         /etc/grub.d/README
-    do
-    	if [ -e "$F.dpkg-dist" ]; then
-    		rm $F
-    	fi
+    do  
+        rm $F
         dpkg-divert --quiet --package grub-files-mx --rename \
                     --divert $F.dpkg-dist --remove $F || :
     done
