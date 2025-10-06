@@ -1,3 +1,9 @@
+grub-files-mx (25.10.01mx25) mx; urgency=medium
+
+  * adjust location of divert files
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Mon, 06 Oct 2025 18:29:52 -0400
+
 grub-files-mx (25.09.01mx25) mx; urgency=medium
 
   * add an echo space to grub.cfg to allow some older machines to see menu

@@ -14,6 +14,8 @@ case "$1" in
         echo "set up os-prober"
         echo "grub-pc grub2/enable_os_prober boolean true" | debconf-set-selections
     fi
+    #make sure a directory exists
+    mkdir -p /var/lib/dpkg-diverts-mx/etc/grub.d /var/lib/dpkg-diverts-mx/usr/share/grub/default/
     for F in \
         /etc/grub.d/00_header    \
         /etc/grub.d/05_debian_theme    \
@@ -27,8 +29,18 @@ case "$1" in
         /usr/share/grub/default/grub \
         /etc/grub.d/README
     do
-        dpkg-divert --quiet --package grub-files-mx --rename \
-                    --divert $F.dpkg-dist --add $F || :
+        # cleanup past installs
+        if [ -n $(dpkg-divert --list \"/etc/grub.d/$F.dpkg-dist\") ]; then 
+        	dpkg-divert --package grub-files-mx --no-rename --divert $F.dpkg-dist --remove $F
+        fi
+
+    	if [ -e $F.dpkg-dist.dpkg-dist ]; then
+    		mv $F.dpkg-dist.dpkg-dist /var/lib/dpkg-diverts-mx/$F
+    	fi
+  
+    	#new divert
+        dpkg-divert --quiet --no-rename --package grub-files-mx  \
+                    --divert /var/lib/dpkg-diverts-mx/$F --add $F || :
     done
   ;;
   *) :
