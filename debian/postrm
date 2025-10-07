@@ -23,7 +23,7 @@ case "$1" in
     do  
         rm $F
         dpkg-divert --quiet --package grub-files-mx --rename \
-                    --divert $F.dpkg-dist --remove $F || :
+                    --divert /var/lib/dpkg-diverts-mx/$F --remove /$F || :
     done
   ;;
   *) :

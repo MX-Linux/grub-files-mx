@@ -35,12 +35,16 @@ case "$1" in
         fi
 
     	if [ -e $F.dpkg-dist.dpkg-dist ]; then
-    		mv $F.dpkg-dist.dpkg-dist /var/lib/dpkg-diverts-mx/$F
+    		mv -f $F.dpkg-dist.dpkg-dist /var/lib/dpkg-diverts-mx$F
+    	fi
+    	
+    	if [ -e $F.dpkg-dist ]; then
+    		mv -f $F.dpkg-dist /var/lib/dpkg-diverts-mx$F
     	fi
   
     	#new divert
         dpkg-divert --quiet --no-rename --package grub-files-mx  \
-                    --divert /var/lib/dpkg-diverts-mx/$F --add $F || :
+                    --divert /var/lib/dpkg-diverts-mx$F --add $F || :
     done
   ;;
   *) :
