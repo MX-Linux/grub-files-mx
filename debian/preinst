@@ -38,12 +38,18 @@ case "$1" in
         dpkg-divert --quiet --rename --package grub-files-mx  \
                     --divert /var/lib/dpkg-diverts-mx$F --add $F || :
     	
+    	#if files don't exist in divert folder, copy some over so at least some are present
     	if [ -e $F.dpkg-dist.dpkg-dist ]; then
-    		mv -f $F.dpkg-dist.dpkg-dist /var/lib/dpkg-diverts-mx$F
+    		if [ ! -e /var/lib/dpkg-diverts-mx$F ]; then
+    			mv -f $F.dpkg-dist.dpkg-dist /var/lib/dpkg-diverts-mx$F
+    		fi
     	fi
     	
+    	#if files don't exist in divert folder, copy some over so at least some are present
     	if [ -e $F.dpkg-dist ]; then
-    		mv -f $F.dpkg-dist /var/lib/dpkg-diverts-mx$F
+    		if [ ! -e /var/lib/dpkg-diverts-mx$F ]; then
+    			mv -f $F.dpkg-dist /var/lib/dpkg-diverts-mx$F
+    		fi
     	fi
   
     	
