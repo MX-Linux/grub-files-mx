@@ -21,9 +21,14 @@ case "$1" in
         /usr/share/grub/default/grub \
         /etc/grub.d/README
     do  
-        rm $F
-        dpkg-divert --quiet --package grub-files-mx --rename \
-                    --divert /var/lib/dpkg-diverts-mx/$F --remove /$F || :
+        rm -f $F
+        
+        dpkg-divert --quiet --package grub-files-mx --no-rename \
+                    --divert /var/lib/dpkg-diverts-mx$F --remove /$F || :
+                    
+        if [ -e /var/lib/dpkg-diverts-mx$F ]; then
+                mv -f /var/lib/dpkg-diverts-mx$F $F
+        fi
     done
   ;;
   *) :
