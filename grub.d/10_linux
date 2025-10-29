@@ -32,7 +32,22 @@ export TEXTDOMAIN=grub
 export TEXTDOMAINDIR="${datarootdir}/locale"
 
 CLASS="--class gnu-linux --class gnu --class os"
-SUPPORTED_INITS="sysvinit:/lib/sysvinit/init systemd:/lib/systemd/systemd upstart:/sbin/upstart"
+########################################################
+## Reinstating multi-init support removed from Trixie ##
+########################################################
+SUPPORTED_INITS="
+                 sysvinit:/lib/sysvinit/init \
+                 systemd:/lib/systemd/systemd \
+                 upstart:/sbin/upstart \
+                 s6-rc:/lib/s6-rc/s6-rc-init \
+                 s6-66:/lib/s6-66/s6-66-init \
+                 openrc:/lib/openrc/openrc-init \
+                 dinit:/lib/dinit/dinit \
+                 runit:/lib/runit/runit-init \
+                 shepherd:/lib/shepherd/shepherd \
+                 sinit:/lib/sinit/sinit
+                 "
+########################################################
 
 if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
   OS=GNU/Linux

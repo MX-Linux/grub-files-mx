@@ -27,7 +27,22 @@ export TEXTDOMAIN=grub
 export TEXTDOMAINDIR="${datarootdir}/locale"
 
 CLASS="--class gnu-linux --class gnu --class os --class xen"
-SUPPORTED_INITS="sysvinit:/lib/sysvinit/init systemd:/lib/systemd/systemd upstart:/sbin/upstart"
+########################################################
+## Reinstating multi-init support removed from Trixie ##
+########################################################
+SUPPORTED_INITS="
+                 sysvinit:/lib/sysvinit/init \
+                 systemd:/lib/systemd/systemd \
+                 upstart:/sbin/upstart \
+                 s6-rc:/lib/s6-rc/s6-rc-init \
+                 s6-66:/lib/s6-66/s6-66-init \
+                 openrc:/lib/openrc/openrc-init \
+                 dinit:/lib/dinit/dinit \
+                 runit:/lib/runit/runit-init \
+                 shepherd:/lib/shepherd/shepherd \
+                 sinit:/lib/sinit/sinit
+                 "
+########################################################
 
 if [ "x${GRUB_DISTRIBUTOR}" = "x" ] ; then
   OS=GNU/Linux
@@ -127,6 +142,12 @@ linux_entry_xsm ()
   if [ x$type != xsimple ] ; then
       if [ x$type = xrecovery ] ; then
 	  title="$(gettext_printf "%s, with Xen %s and Linux %s (%s)" "${os}" "${entry_xen_version}" "${version}" "$(gettext "${GRUB_RECOVERY_TITLE}")")"
+###################################################################################################################################
+## Reinstating multi-init support removed from Trixie
+###################################################################################################################################
+	  elif [ x$type = xinit-* ] ; then
+	  title="$(gettext_printf "%s, with Xen %s and Linux %s (%s)" "${os}" "${entry_xen_version}" "${version}" "${type#init-}")" 
+###################################################################################################################################
       else
 	  title="$(gettext_printf "%s, with Xen %s and Linux %s" "${os}" "${entry_xen_version}" "${version}")"
       fi
