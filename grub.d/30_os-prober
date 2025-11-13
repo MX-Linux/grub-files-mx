@@ -1,16 +1,5 @@
 #! /bin/sh
-
-#tag for mx-system update
-#mx-system 20.11.02+4
-
-export LVM_SUPPRESS_FD_WARNINGS=true
-
-if [ "x$(debconf-get-selections |grep  '^grub-pc\sgrub2/enable_os_prober\sboolean\strue' | awk '{print $4}')" = "xtrue" ]; then
-   export GRUB_DISABLE_OS_PROBER="false"
-fi
-
 set -e
-
 
 # grub-mkconfig helper script.
 # Copyright (C) 2006,2007,2008,2009  Free Software Foundation, Inc.
@@ -51,14 +40,17 @@ EOF
   fi
 }
 
-if [ "x${GRUB_DISABLE_OS_PROBER}" = "xtrue" ]; then
-  exit 0
-fi
-
-if [ -z "`which os-prober 2> /dev/null`" ] || [ -z "`which linux-boot-prober 2> /dev/null`" ] ; then
+if ! command -v os-prober > /dev/null || ! command -v linux-boot-prober > /dev/null ; then
   # missing os-prober and/or linux-boot-prober
   exit 0
 fi
+
+if [ "x${GRUB_DISABLE_OS_PROBER}" = "xtrue" ]; then
+  #grub_warn "$(gettext_printf "os-prober will not be executed to detect other bootable partitions.\nSystems on them will not be added to the GRUB boot configuration.\nCheck GRUB_DISABLE_OS_PROBER documentation entry.")"
+  exit 0
+fi
+
+#grub_warn "$(gettext_printf "os-prober will be executed to detect other bootable partitions.\nIts output will be used to detect bootable binaries on them and create new boot entries.")"
 
 OSPROBED="`os-prober | tr ' ' '^' | paste -s -d ' '`"
 if [ -z "${OSPROBED}" ] ; then
@@ -136,7 +128,9 @@ EOF
 
 used_osprober_linux_ids=
 
-wubi=
+if [ "x$GRUB_TOP_LEVEL_OS_PROBER" != x ]; then
+  OSPROBED=$(grub_move_to_front "$GRUB_TOP_LEVEL_OS_PROBER" ${OSPROBED})
+fi
 
 for OS in ${OSPROBED} ; do
   DEVICE="`echo ${OS} | cut -d ':' -f 1`"
@@ -174,24 +168,6 @@ for OS in ${OSPROBED} ; do
   case ${BOOT} in
     chain)
 
-      case ${LONGNAME} in
-	Windows*)
-	  if [ -z "$wubi" ]; then
-	    if [ -x /usr/share/lupin-support/grub-mkimage ] && \
-	       /usr/share/lupin-support/grub-mkimage --test; then
-	      wubi=yes
-	    else
-	      wubi=no
-	    fi
-	  fi
-	  if [ "$wubi" = yes ]; then
-	    echo "Skipping ${LONGNAME} on Wubi system" >&2
-	    continue
-	  fi
-	  ;;
-      esac
-
-      found_other_os=1
 	  onstr="$(gettext_printf "(on %s)" "${DEVICE}")"
       cat << EOF
 menuentry '$(echo "${LONGNAME} $onstr" | grub_quote)' $CLASS --class os \$menuentry_id_option 'osprober-chain-$(grub_get_device_id "${DEVICE}")' {
@@ -254,7 +230,7 @@ EOF
         LBOOT="`echo ${LINUX} | cut -d ':' -f 2`"
         LLABEL="`echo ${LINUX} | cut -d ':' -f 3 | tr '^' ' '`"
         LKERNEL="`echo ${LINUX} | cut -d ':' -f 4`"
-        LINITRD="`echo ${LINUX} | cut -d ':' -f 5  | tr '^' ' '`"
+        LINITRD="`echo ${LINUX} | cut -d ':' -f 5 | tr '^' ' '`"
         LPARAMS="`echo ${LINUX} | cut -d ':' -f 6- | tr '^' ' '`"
 
         if [ -z "${LLABEL}" ] ; then
@@ -283,7 +259,15 @@ EOF
 	fi
 	used_osprober_linux_ids="$used_osprober_linux_ids 'osprober-gnulinux-$LKERNEL-${recovery_params}-$counter-$boot_device_id'"
 
-	if [ "x$is_top_level" = xtrue ] && [ "x${GRUB_DISABLE_SUBMENU}" != xy ]; then
+	# The GRUB_DISABLE_SUBMENU option used to be different than others since it was
+	# mentioned in the documentation that has to be set to 'y' instead of 'true' to
+	# enable it. This caused a lot of confusion to users that set the option to 'y',
+	# 'yes' or 'true'. This was fixed but all of these values must be supported now.
+	if [ "x${GRUB_DISABLE_SUBMENU}" = xyes ] || [ "x${GRUB_DISABLE_SUBMENU}" = xy ]; then
+	    GRUB_DISABLE_SUBMENU="true"
+	fi
+
+	if [ "x$is_top_level" = xtrue ] && [ "x${GRUB_DISABLE_SUBMENU}" != xtrue ]; then
             cat << EOF
 menuentry '$(echo "$OS $onstr" | grub_quote)' $CLASS --class gnu-linux --class gnu --class os \$menuentry_id_option 'osprober-gnulinux-simple-$boot_device_id' {
 EOF
