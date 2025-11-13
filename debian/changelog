@@ -1,3 +1,9 @@
+grub-files-mx (25.11.01mx25) mx; urgency=medium
+
+  * update 30_os_prober so os-prober is toggle off/on from /etc/default/grub
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Thu, 13 Nov 2025 17:59:59 -0500
+
 grub-files-mx (25.10.02mx25) mx; urgency=medium
 
   * add some init-diversity entries
