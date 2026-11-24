@@ -1,3 +1,9 @@
+grub-files-mx (26.11.01mx25) mx; urgency=medium
+
+  *  30_uefi-firmware: no efivarfs mount with efi=noruntime / noefiruntime
+
+ -- Dolphin Oracle <dolphinoracle@gmail.com>  Mon, 23 Nov 2026 20:48:26 -0500
+
 grub-files-mx (25.11.01mx25) mx; urgency=medium
 
   * update 30_os_prober so os-prober is toggle off/on from /etc/default/grub
